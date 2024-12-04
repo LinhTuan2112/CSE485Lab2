@@ -26,7 +26,11 @@ CREATE TABLE IF NOT EXISTS `categories` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Data exporting was unselected.
+-- Dumping data for table tlunews.categories: ~3 rows (approximately)
+INSERT INTO `categories` (`id`, `name`) VALUES
+	(1, 'Technology'),
+	(2, 'Health'),
+	(3, 'Education');
 
 -- Dumping structure for table tlunews.news
 CREATE TABLE IF NOT EXISTS `news` (
@@ -41,7 +45,14 @@ CREATE TABLE IF NOT EXISTS `news` (
   CONSTRAINT `fk_category` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Data exporting was unselected.
+-- Dumping data for table tlunews.news: ~6 rows (approximately)
+INSERT INTO `news` (`id`, `title`, `content`, `image`, `created_at`, `category_id`) VALUES
+	(1, 'AI Revolution', 'Artificial Intelligence is shaping...', 'ai.jpg', '2024-12-01 10:00:00', 1),
+	(2, 'Healthy Living Tips', 'Maintaining a healthy lifestyle...', 'health.jpg', '2024-12-02 15:30:00', 2),
+	(3, 'The Future of Education', 'Education is rapidly evolving...', 'education.jpg', '2024-12-03 09:15:00', 3),
+	(4, 'AI Revolution', 'Artificial Intelligence is shaping...', 'ai.jpg', '2024-12-01 10:00:00', 1),
+	(5, 'Healthy Living Tips', 'Maintaining a healthy lifestyle...', 'health.jpg', '2024-12-02 15:30:00', 2),
+	(6, 'The Future of Education', 'Education is rapidly evolving...', 'education.jpg', '2024-12-03 09:15:00', 3);
 
 -- Dumping structure for table tlunews.users
 CREATE TABLE IF NOT EXISTS `users` (
@@ -53,7 +64,11 @@ CREATE TABLE IF NOT EXISTS `users` (
   UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Data exporting was unselected.
+-- Dumping data for table tlunews.users: ~3 rows (approximately)
+INSERT INTO `users` (`id`, `username`, `password`, `role`) VALUES
+	(1, 'admin', 'admin123', 1),
+	(2, 'user1', 'user123', 0),
+	(3, 'user2', 'user234', 0);
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
