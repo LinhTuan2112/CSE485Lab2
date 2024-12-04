@@ -19,9 +19,39 @@
 CREATE DATABASE IF NOT EXISTS `tlunews` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `tlunews`;
 
--- Data exporting was unselected.
+-- Dumping structure for table tlunews.categories
+CREATE TABLE IF NOT EXISTS `categories` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Data exporting was unselected.
+
+-- Dumping structure for table tlunews.news
+CREATE TABLE IF NOT EXISTS `news` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `content` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `category_id` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_category` (`category_id`),
+  CONSTRAINT `fk_category` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Data exporting was unselected.
+
+-- Dumping structure for table tlunews.users
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `username` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `role` int NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Data exporting was unselected.
 
