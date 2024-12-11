@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = trim($_POST['username']);
     $password = $_POST['password'];
 
-    // Kiểm tra dữ liệu đầu vào có hợp lệ hay không
+    // Kiểm tra dữ liệu đầu vào
     if (empty($username) || empty($password)) {
         $error = "Vui lòng nhập đầy đủ thông tin.";
     } else {
@@ -29,13 +29,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
         // Kiểm tra người dùng và xác minh mật khẩu
-        if ($user && $user['password'] === $password) { // So sánh trực tiếp (không an toàn)
+        if ($user && $user['password'] === $password) {
             // Đăng nhập thành công
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['username'] = $user['username'];
+            $_SESSION['role'] = $user['role'];
 
-            // Chuyển hướng người dùng đến trang admin
-            header('Location: /CSE485Lab2/views/home/index.php');
+            // Phân quyền: Chuyển hướng người dùng
+            if ($user['role'] == 1) { // Admin
+                header('Location: /CSE485Lab2/views/admin/dashboard.php');
+            } else { // Người dùng thường
+                header('Location: /CSE485Lab2/views/user/home.php');
+            }
             exit;
         } else {
             // Đăng nhập thất bại
@@ -44,13 +49,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login</title>
+    <title>Login</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -65,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="card-body">
                         <?php if (isset($error)): ?>
                             <div class="alert alert-danger" role="alert">
-                                <?php echo htmlspecialchars($error); // Bảo vệ khỏi XSS ?>
+                                <?php echo htmlspecialchars($error); // Bảo vệ chống XSS ?>
                             </div>
                         <?php endif; ?>
                         <form action="" method="POST">
